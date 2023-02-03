@@ -24,8 +24,24 @@ body {
     height: 16px;
 }
 
-.yellow {
+.white-color {
+    background-color: white;
+}
+
+.red-color {
+    background-color: red;
+}
+
+.blue-color {
+    background-color: blue;
+}
+
+.yellow-color {
     background-color: yellow;
+}
+
+.green-color {
+    background-color: green;
 }
 
 .grid-size-button {
