@@ -98,17 +98,9 @@ body {
     outline: none;
 }
 
-/*
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-    -webkit-appearance: none;
-}
-*/
-
 .square-background-color {
     background-color: #1a1a1a;
 }
-
 
 .default-color {
     background-color: #1a1a1a;

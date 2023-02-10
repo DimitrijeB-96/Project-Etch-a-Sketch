@@ -9,19 +9,16 @@ messageDiv.appendChild(message);
 let defaultGridSize = 16;
 let inputValue;
 
-//Default color
 let color = 'white';
 
 const defaultColor = document.querySelector('.default-color');
 defaultColor.addEventListener('click', () => {
     color = 'white';
-    console.log('white');
 });
 
 const rainbowColor = document.querySelector('.rainbow-color');
 rainbowColor.addEventListener('click', () =>{
     color = 'rainbow';
-    console.log('rainbow');
 });
 
 function createEachSquare() {
@@ -38,8 +35,9 @@ function createEachSquare() {
     });
 }
 
+createGrid(defaultGridSize);
+
 function createGrid(size) {
-    //define size for each row and column
     canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
     canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     
@@ -50,7 +48,7 @@ function createGrid(size) {
     }
 }
 
-createGrid(defaultGridSize);
+
 
 changeSizeBtn.addEventListener('click', () => { 
     inputValue = changeSizeInput.value;
