@@ -1,127 +1,81 @@
-const gridSize = 256;
+const canvas = document.querySelector('.canvas');
 
-const buttonsDiv = document.createElement('div');
-const gridSizeBtn = document.createElement('button');
-const resetColorBtn = document.createElement('button');
-const redColorBtn = document.createElement('button');
-const blueColorBtn = document.createElement('button');
-const yellowColorBtn = document.createElement('button');
-const greenColorBtn = document.createElement('button');
+const changeSizeBtn = document.querySelector('.change-size');
+const changeSizeInput = document.querySelector('.get-size');
 
-buttons();
+const messageDiv = document.querySelector('.message-div');
+const message = document.querySelector('.message');
+messageDiv.appendChild(message);
+let defaultGridSize = 16;
+let inputValue;
 
-//function that make div with buttons
-function buttons() {
+//Default color
+let color = 'white';
+
+const defaultColor = document.querySelector('.default-color');
+defaultColor.addEventListener('click', () => {
+    color = 'white';
+    console.log('white');
+});
+
+const rainbowColor = document.querySelector('.rainbow-color');
+rainbowColor.addEventListener('click', () =>{
+    color = 'rainbow';
+    console.log('rainbow');
+});
+
+function createEachSquare() {
+    let square = document.createElement('div');
+    square.className = 'square';
+    square.classList.add('square-background-color');
+    canvas.appendChild(square);
+    square.addEventListener('mouseover', () => {
+        if (color == 'rainbow') {
+            square.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 50%)`;
+        } else {
+            square.style.backgroundColor = 'white';
+        }
+    });
+}
+
+function createGrid(size) {
+    //define size for each row and column
+    canvas.style.gridTemplateColumns = `repeat(${size}, 1fr)`;
+    canvas.style.gridTemplateRows = `repeat(${size}, 1fr)`;
     
-    //create and append div
-    document.body.appendChild(buttonsDiv);
+    let gridSize = size * size;
 
-    //create and append gridSize button
-    gridSizeBtn.setAttribute('class', 'grid-size-button');
-    gridSizeBtn.textContent = 'Set Size';
-    buttonsDiv.appendChild(gridSizeBtn);
-
-    //create and append resetColor button
-    resetColorBtn.setAttribute('class', 'reset-color-button');
-    resetColorBtn.textContent = 'Reset';
-    buttonsDiv.appendChild(resetColorBtn);
-
-    //creating div for buttons that sets the color
-    const colorDiv = document.createElement('div');
-    buttonsDiv.appendChild(colorDiv);
-
-    //red
-    redColorBtn.setAttribute('class', 'red');
-    redColorBtn.textContent = 'Red';
-    colorDiv.appendChild(redColorBtn);
-
-    //blue
-    blueColorBtn.setAttribute('class', 'blue');
-    blueColorBtn.textContent = 'Blue';
-    colorDiv.appendChild(blueColorBtn);
-
-    //green
-    greenColorBtn.setAttribute('class', 'green');
-    greenColorBtn.textContent = 'Green';
-    colorDiv.appendChild(greenColorBtn);
-
-    //yellow
-    yellowColorBtn.setAttribute('class', 'yellow');
-    yellowColorBtn.textContent = 'Yellow';
-    colorDiv.appendChild(yellowColorBtn);
-
-}
-
-//Main div container for grid
-const mainDiv = document.createElement('div');
-mainDiv.className = 'container';
-document.body.appendChild(mainDiv);
-
-//calling function that will "make" a grid
-createGrid(gridSize);
-
-//calling function that will change color of a mousedover square
-selectSquare();
-
-//functon that makes div "square"
-function divBoxInsideGrid() {
-    let box = document.createElement('div');
-    box.setAttribute('class', 'box');
-    mainDiv.appendChild(box);
-}
-
-//fucntion that makes a grid out of "squares" made in divBoxInsideGrid function
-function createGrid(gridSize) {
-    for( let i = 0; i < gridSize; i++) {
-        divBoxInsideGrid();
+    for (let i = 0; i < gridSize; i++) {
+        createEachSquare();
     }
 }
 
-function selectSquare() {
-    let eachDiv = document.querySelectorAll('.box');
-    let whichColor = 'white-color';
+createGrid(defaultGridSize);
 
-    if (document.getElementsByName(redColorBtn).clicked == true) {
-        redColorBtn.addEventListener('click', () => {
-            whichColor = 'red-color';
-        });
+changeSizeBtn.addEventListener('click', () => { 
+    inputValue = changeSizeInput.value;
+    if (inputValue == '') {
+        message.textContent = "Please enter a number";
+    } else if (inputValue <= 0 || inputValue > 100) {
+        message.textContent = "Please enter number from 1 to 100";
+    } else {
+        message.textContent = `Size of grid is ${inputValue} x ${inputValue}`;
+        createGrid(inputValue);
     }
-    
+});
 
+const resetBtn = document.querySelector('.reset-btn');
+const eachSquare = document.querySelector('.square');
 
-    for(let i = 0; i < eachDiv.length; i++) {
-        eachDiv[i].addEventListener('mouseover', () => {
-            eachDiv[i].classList.add(whichColor);
-        });
-
-        //Reset button click removes yellow class from "squares"
-        resetColorBtn.addEventListener('click', () => {
-            eachDiv[i].classList.remove(whichColor);
-        });
+resetBtn.addEventListener('click', () => {
+    if (inputValue !== defaultGridSize) {
+        createGrid(defaultGridSize);
     }
-}
-
-// EVENTS //
-
-gridSizeBtn.addEventListener('click', () => {
-    alert();
+    let allSquares = document.querySelectorAll('.square');
+    allSquares.forEach(eachSquare => eachSquare.style.backgroundColor = '#1a1a1a');
+    message.textContent = `Size of grid is ${defaultGridSize} x ${defaultGridSize}`;
 });
 
-redColorBtn.addEventListener('click', () => {
-
-});
-
-blueColorBtn.addEventListener('click', () => {
-
-});
-
-yellowColorBtn.addEventListener('click', () => {
-
-});
-
-greenColorBtn.addEventListener('click', () => {
-
-});
 
 
 
